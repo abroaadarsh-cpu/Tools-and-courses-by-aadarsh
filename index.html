@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aadarsh Toolkit — Free & Pro Web Tools + Courses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101626;
+    --ink-soft:#1c2436;
+    --paper:#F2EFE6;
+    --paper-dim:#e8e3d5;
+    --gold:#C9A227;
+    --gold-soft:#e8d69a;
+    --slate:#64748B;
+    --green:#2F855A;
+    --line: rgba(16,22,38,0.12);
+    --line-light: rgba(242,239,230,0.14);
+    --radius: 3px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; color:var(--ink);}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--ink);
+    border-bottom:1px solid var(--line-light);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{color:var(--paper); font-family:'Fraunces',serif; font-size:1.25rem; font-weight:700; letter-spacing:0.2px;}
+  .brand span{color:var(--gold);}
+  .navlinks{display:flex; gap:28px; list-style:none;}
+  .navlinks a{color:var(--paper); text-decoration:none; font-size:0.92rem; opacity:0.82; transition:opacity .15s;}
+  .navlinks a:hover{opacity:1;}
+  .navlinks a:focus-visible, a:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:88px 0 72px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  .hero h1{font-size:clamp(2.1rem, 4vw, 3.1rem); line-height:1.12; max-width:11ch;}
+  .hero p.lead{margin-top:18px; font-size:1.05rem; color:#c7cbd8; max-width:44ch;}
+  .hero-cta{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:12px 22px; border-radius:var(--radius);
+    font-size:0.92rem; font-weight:600; text-decoration:none; cursor:pointer;
+    border:1px solid transparent; transition:transform .12s ease, background .15s;
+  }
+  .btn-gold{background:var(--gold); color:var(--ink);}
+  .btn-gold:hover{background:var(--gold-soft);}
+  .btn-outline{border-color:rgba(242,239,230,0.35); color:var(--paper);}
+  .btn-outline:hover{border-color:var(--paper);}
+  .btn:active{transform:scale(0.98);}
+
+  .console{
+    background:var(--ink-soft); border:1px solid var(--line-light);
+    border-radius:6px; padding:20px 22px; font-family:'JetBrains Mono',monospace;
+    font-size:0.86rem; color:#a9e0c2;
+  }
+  .console .row{color:#c7cbd8; margin-bottom:8px;}
+  .console .row:last-child{margin-bottom:0;}
+  .console .prompt{color:var(--gold);}
+  .console .cursor{display:inline-block; width:7px; height:14px; background:var(--gold); vertical-align:middle; animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:72px 0;}
+  .section-head{margin-bottom:36px; max-width:60ch;}
+  .section-head .kicker{font-size:0.82rem; color:var(--slate); font-weight:600; margin-bottom:6px;}
+  .section-head h2{font-size:1.9rem;}
+  .section-head p{margin-top:10px; color:var(--slate); font-size:0.98rem;}
+
+  #free{background:var(--paper);}
+  #paid{background:var(--paper-dim); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  #courses{background:var(--ink); color:var(--paper);}
+  #about{background:var(--paper);}
+
+  /* ---------- TOOL GRID ---------- */
+  .tool-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+  @media (max-width:900px){.tool-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:620px){.tool-grid{grid-template-columns:1fr;}}
+
+  .tool-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px; cursor:pointer; transition:border-color .15s;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .tool-card:hover{border-color:var(--ink);}
+  .tool-card .num{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--slate);}
+  .tool-card h3{font-size:1.02rem; font-family:'Inter',sans-serif; font-weight:600;}
+  .tool-card p{font-size:0.85rem; color:var(--slate);}
+
+  .tool-card.paid{background:var(--ink); border-color:var(--ink);}
+  .tool-card.paid h3, .tool-card.paid .num{color:var(--paper);}
+  .tool-card.paid p{color:#aab0c0;}
+  .tool-card.paid .price{margin-top:6px; font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:0.85rem;}
+  .tool-card.paid.unlocked{border-color:var(--green);}
+  .tool-card.paid.unlocked .price{color:var(--green);}
+
+  /* ---------- MODAL ---------- */
+  .modal-backdrop{
+    display:none; position:fixed; inset:0; background:rgba(16,22,38,0.6);
+    z-index:100; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal{
+    background:var(--paper); border-radius:6px; max-width:560px; width:100%;
+    max-height:86vh; overflow-y:auto; padding:26px 28px; position:relative;
+  }
+  .modal h3{font-size:1.3rem; margin-bottom:14px;}
+  .modal .close{
+    position:absolute; top:16px; right:16px; background:none; border:none;
+    font-size:1.3rem; cursor:pointer; color:var(--slate); line-height:1;
+  }
+  .modal label{display:block; font-size:0.82rem; font-weight:600; margin:14px 0 6px;}
+  .modal input, .modal textarea, .modal select{
+    width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:3px;
+    font-family:'Inter',sans-serif; font-size:0.92rem; background:#fff;
+  }
+  .modal textarea{min-height:100px; resize:vertical; font-family:'JetBrains Mono',monospace; font-size:0.85rem;}
+  .modal .out{
+    margin-top:14px; background:var(--ink); color:#a9e0c2; padding:12px 14px;
+    border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:0.85rem;
+    white-space:pre-wrap; word-break:break-word; min-height:20px;
+  }
+  .modal .run-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;}
+  .modal .run-row .btn{padding:9px 16px; font-size:0.85rem;}
+  .paywall{
+    margin-top:16px; padding:16px; border:1px dashed var(--gold); border-radius:4px;
+    background:#fbf5e4; font-size:0.88rem; color:var(--ink);
+  }
+  .paywall .btn{margin-top:10px;}
+
+  /* ---------- COURSES ---------- */
+  .discount-banner{
+    background:var(--gold); color:var(--ink); text-align:center; padding:11px 16px;
+    font-size:0.9rem; font-weight:600;
+  }
+  .course-list{display:flex; flex-direction:column; border-top:1px solid var(--line-light);}
+  .course-row{
+    display:grid; grid-template-columns:60px 1fr auto; gap:18px; align-items:start;
+    padding:22px 0; border-bottom:1px solid var(--line-light);
+  }
+  .course-row .step{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:0.9rem; padding-top:3px;}
+  .course-row h3{color:var(--paper); font-size:1.15rem; margin-bottom:6px;}
+  .course-row p{color:#b7bcc9; font-size:0.9rem; max-width:60ch;}
+  .course-row .meta{color:#8890a0; font-size:0.78rem; margin-top:6px;}
+  .course-price{text-align:right;}
+  .course-price .now{color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:600;}
+  .course-price .btn{margin-top:8px;}
+  @media (max-width:640px){.course-row{grid-template-columns:1fr; }.course-price{text-align:left;}}
+
+  .bundle-note{margin-top:30px; padding:20px; border:1px solid var(--line-light); border-radius:5px; font-size:0.92rem; color:#c7cbd8;}
+  .bundle-note strong{color:var(--paper);}
+
+  /* ---------- ABOUT / PAYMENTS NOTE ---------- */
+  .note-box{
+    border:1px solid var(--line); border-radius:5px; padding:22px 24px; background:#fff;
+    font-size:0.92rem; color:var(--ink);
+  }
+  .note-box h3{font-size:1.05rem; margin-bottom:8px;}
+  .note-box ol{margin:10px 0 0 20px; color:var(--slate);}
+  .note-box li{margin-bottom:6px;}
+
+  footer{background:var(--ink); color:#8890a0; padding:30px 0; font-size:0.82rem; text-align:center;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Aadarsh<span>.tools</span></div>
+    <ul class="navlinks">
+      <li><a href="#free">Free tools</a></li>
+      <li><a href="#paid">Pro tools</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#about">How payments work</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Small tools. Real skills. Built by a student, for people who build things.</h1>
+      <p class="lead">Fifteen free utilities for everyday web work, fifteen pro tools for the harder problems, and courses that take you from your first tag to a finished project — HTML, CSS, JavaScript and Python.</p>
+      <div class="hero-cta">
+        <a href="#free" class="btn btn-gold">Browse free tools</a>
+        <a href="#courses" class="btn btn-outline">See courses</a>
+      </div>
+    </div>
+    <div class="console">
+      <div class="row"><span class="prompt">$</span> whoami</div>
+      <div class="row">aadarsh — student, web developer</div>
+      <div class="row"><span class="prompt">$</span> ls tools/</div>
+      <div class="row">free/  pro/  courses/</div>
+      <div class="row"><span class="prompt">$</span> ./start<span class="cursor"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FREE TOOLS ============ -->
+<section id="free">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">No sign-up, no cost</div>
+      <h2>15 free tools</h2>
+      <p>These run fully in your browser — nothing you type ever leaves this page. Click any card to open it.</p>
+    </div>
+    <div class="tool-grid" id="freeGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PAID TOOLS ============ -->
+<section id="paid">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">One-time purchase, Rs. 500 each</div>
+      <h2>15 pro tools</h2>
+      <p>Heavier-duty versions of the free tools, built for real project work. Each unlocks separately for Rs. 500.</p>
+    </div>
+    <div class="tool-grid" id="paidGrid"></div>
+  </div>
+</section>
+
+<!-- ============ COURSES ============ -->
+<section id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker" style="color:var(--gold);">Structured learning path</div>
+      <h2 style="color:var(--paper);">Learn web development, start to finish</h2>
+      <p style="color:#b7bcc9;">Five courses, taken in order, take you from a blank page to a working, deployed project.</p>
+    </div>
+
+    <div class="discount-banner" style="border-radius:4px; margin-bottom:26px;">
+      Every course, every tool: Rs. 500 flat. No tiers, no hidden fees.
+    </div>
+
+    <div class="course-list" id="courseList"></div>
+
+    <div class="bundle-note">
+      <strong>Full web development bundle — Rs. 500</strong><br>
+      All five courses (HTML, CSS, JavaScript, Python, and the capstone web dev project), lifetime access, updated as the material improves.
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT / PAYMENTS ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Before you launch this</div>
+      <h2>How the Rs. 500 payments actually work</h2>
+    </div>
+    <div class="note-box">
+      <p>This page is the front end. Automated card checkout ("Buy" buttons wired to Gumroad/Stripe) isn't connected yet — but you can start taking money right now with manual JazzCash payments while you set that up.</p>
+      <ol>
+        <li><strong>JazzCash (active now)</strong> — every Buy button shows your number and asks the buyer to send the amount, then confirm. You'll need to manually check JazzCash and unlock the tool/course for them once you see the payment.</li>
+        <li><strong>Gumroad</strong> — for automatic checkout later. Create a product for each tool/course, get a checkout link, paste it into the <span class="mono">PAYMENT_LINKS</span> object near the bottom of this file's script.</li>
+        <li><strong>Stripe Checkout</strong> — more control, needs a small backend (even a free Cloudflare Worker or Vercel function) to create the checkout session securely.</li>
+      </ol>
+      <p style="margin-top:12px;">JazzCash gets you earning today with zero setup — just remember every unlock is manual until you add an automated link. Search YouTube for "Gumroad checkout link tutorial" when you're ready to automate.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by Aadarsh · This is a starting template — edit the tools, prices and course content freely.
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script>
+/* ========================================================================
+   PAYMENT LINKS — add a real Gumroad/Stripe checkout URL per tool/course id
+   to enable automatic checkout. Until an id has an entry here, buying that
+   item falls back to the manual JazzCash flow below.
+   ======================================================================== */
+const PAYMENT_LINKS = {
+  // "tool-id": "https://yourname.gumroad.com/l/xxxx"
+};
+
+/* Manual JazzCash payment — shown until a PAYMENT_LINKS entry exists for an item */
+const JAZZCASH_NUMBER = "0311-2396310";
+
+/* ---------------- FREE TOOLS DATA ---------------- */
+const freeTools = [
+  {id:"wc", name:"Word & character counter", desc:"Live word, character and sentence counts as you type."},
+  {id:"case", name:"Case converter", desc:"Switch text between UPPER, lower, Title and Sentence case."},
+  {id:"slug", name:"Slug generator", desc:"Turn any title into a clean URL slug."},
+  {id:"b64", name:"Base64 encode / decode", desc:"Convert text to and from Base64 instantly."},
+  {id:"pwd", name:"Password generator", desc:"Create strong random passwords with custom length."},
+  {id:"json", name:"JSON formatter", desc:"Pretty-print or minify JSON and catch syntax errors."},
+  {id:"color", name:"HEX ↔ RGB converter", desc:"Convert colour codes both directions with a live swatch."},
+  {id:"bmi", name:"BMI calculator", desc:"Body mass index from height and weight, metric or imperial."},
+  {id:"age", name:"Age calculator", desc:"Exact age in years, months and days from a birth date."},
+  {id:"percent", name:"Percentage calculator", desc:"Find a percentage, increase or decrease in one place."},
+  {id:"lorem", name:"Lorem ipsum generator", desc:"Generate placeholder paragraphs of any length."},
+  {id:"urlenc", name:"URL encoder / decoder", desc:"Escape or unescape URLs and query strings."},
+  {id:"timestamp", name:"Unix timestamp converter", desc:"Convert between Unix time and readable dates."},
+  {id:"temp", name:"Temperature converter", desc:"Celsius, Fahrenheit and Kelvin, all at once."},
+  {id:"randnum", name:"Random number generator", desc:"Pick a random number between any min and max."}
+];
+
+/* ---------------- PAID TOOLS DATA (all Rs. 500) ---------------- */
+const paidTools = [
+  {id:"p-minify", name:"Bulk HTML/CSS/JS minifier", desc:"Paste multiple files, get all three minified at once."},
+  {id:"p-regex", name:"Regex tester & builder", desc:"Live match highlighting with a plain-English explanation."},
+  {id:"p-diff", name:"Text/code diff checker", desc:"Side-by-side diff for two blocks of text or code."},
+  {id:"p-svg", name:"SVG optimizer", desc:"Strip unused metadata and shrink SVG file size."},
+  {id:"p-favicon", name:"Favicon generator", desc:"One image in, a full favicon set out, ready to deploy."},
+  {id:"p-meta", name:"SEO meta tag builder", desc:"Generate title, description and Open Graph tags together."},
+  {id:"p-csv", name:"CSV ↔ JSON converter", desc:"Convert full datasets either direction, no size limit."},
+  {id:"p-cron", name:"Cron expression builder", desc:"Build and explain cron schedules visually."},
+  {id:"p-hash", name:"File hash generator", desc:"MD5 / SHA-1 / SHA-256 for any pasted text or file."},
+  {id:"p-gradient", name:"CSS gradient studio", desc:"Multi-stop gradient builder with copyable CSS."},
+  {id:"p-responsive", name:"Responsive breakpoint tester", desc:"Preview a pasted URL or HTML at 8 device widths."},
+  {id:"p-markdown", name:"Markdown → HTML/PDF exporter", desc:"Turn Markdown notes into styled HTML or PDF."},
+  {id:"p-apitest", name:"API request tester", desc:"Send GET/POST requests and inspect responses, like a mini Postman."},
+  {id:"p-sitemap", name:"Sitemap & robots.txt generator", desc:"Generate both files from a simple URL list."},
+  {id:"p-perf", name:"Page speed checklist tool", desc:"Paste your HTML, get a prioritized performance checklist."}
+];
+
+/* ---------------- COURSES DATA ---------------- */
+const courses = [
+  {id:"c-html", step:"01", name:"HTML foundations", desc:"Structure real pages: semantic tags, forms, accessibility basics, and how browsers actually read your markup.", meta:"6 modules · 4–5 hrs", now:"Rs. 500"},
+  {id:"c-css", step:"02", name:"CSS & layout", desc:"Box model, Flexbox and Grid, responsive design, and building a layout that doesn't break on mobile.", meta:"8 modules · 6–7 hrs", now:"Rs. 500"},
+  {id:"c-js", step:"03", name:"JavaScript essentials", desc:"Variables, functions, the DOM, events, and fetch — enough to make any page interactive.", meta:"10 modules · 8–9 hrs", now:"Rs. 500"},
+  {id:"c-python", step:"04", name:"Python fundamentals", desc:"Syntax, data structures, functions and files — a clean second language, useful for scripts, data and backends.", meta:"9 modules · 7–8 hrs", now:"Rs. 500"},
+  {id:"c-webdev", step:"05", name:"Web development capstone", desc:"Combine HTML, CSS, JS and a simple Python backend into one real project, and deploy it live.", meta:"7 modules · 6 hrs", now:"Rs. 500"}
+];
+
+/* ---------------- UNLOCKED STATE (demo only, per-browser) ---------------- */
+const unlocked = new Set(JSON.parse(localStorage.getItem("aadarsh_unlocked") || "[]"));
+function persistUnlocked(){ localStorage.setItem("aadarsh_unlocked", JSON.stringify([...unlocked])); }
+
+/* ---------------- RENDER GRIDS ---------------- */
+const freeGrid = document.getElementById("freeGrid");
+freeTools.forEach((t,i)=>{
+  const card = document.createElement("div");
+  card.className = "tool-card";
+  card.innerHTML = `<span class="num">0${i+1<10?"0"+(i+1):i+1}</span><h3>${t.name}</h3><p>${t.desc}</p>`;
+  card.onclick = ()=>openFreeTool(t.id);
+  freeGrid.appendChild(card);
+});
+
+const paidGrid = document.getElementById("paidGrid");
+paidTools.forEach((t,i)=>{
+  const card = document.createElement("div");
+  const isUnlocked = unlocked.has(t.id);
+  card.className = "tool-card paid" + (isUnlocked ? " unlocked" : "");
+  card.innerHTML = `<span class="num">P${i+1<10?"0"+(i+1):i+1}</span><h3>${t.name}</h3><p>${t.desc}</p><span class="price">${isUnlocked ? "✓ Unlocked" : "Rs. 500"}</span>`;
+  card.onclick = ()=>openPaidTool(t);
+  paidGrid.appendChild(card);
+});
+
+const courseList = document.getElementById("courseList");
+courses.forEach(c=>{
+  const row = document.createElement("div");
+  row.className = "course-row";
+  const isUnlocked = unlocked.has(c.id);
+  row.innerHTML = `
+    <div class="step">${c.step}</div>
+    <div>
+      <h3>${c.name}</h3>
+      <p>${c.desc}</p>
+      <div class="meta">${c.meta}</div>
+    </div>
+    <div class="course-price">
+      <div class="now">${isUnlocked ? "Enrolled ✓" : c.now}</div>
+      ${isUnlocked ? "" : `<button class="btn btn-gold" data-course="${c.id}">Enroll</button>`}
+    </div>`;
+  courseList.appendChild(row);
+  if(!isUnlocked){
+    row.querySelector("button").onclick = ()=>openPurchase(c.id, c.name, c.now);
+  }
+});
+
+/* ---------------- MODAL HELPERS ---------------- */
+const backdrop = document.getElementById("modalBackdrop");
+const modalBody = document.getElementById("modalBody");
+function closeModal(){ backdrop.classList.remove("open"); modalBody.innerHTML=""; }
+backdrop.onclick = (e)=>{ if(e.target===backdrop) closeModal(); };
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+function openModal(html, init){
+  modalBody.innerHTML = `<button class="close" aria-label="Close" onclick="closeModal()">×</button>` + html;
+  backdrop.classList.add("open");
+  if(init) init();
+}
+
+/* ---------------- PURCHASE / UNLOCK FLOW ---------------- */
+function openPurchase(id, name, price){
+  const link = PAYMENT_LINKS[id];
+  openModal(`
+    <h3>${name}</h3>
+    <p style="color:var(--slate); font-size:0.92rem;">One-time purchase — ${price}.</p>
+    ${link
+      ? `<a class="btn btn-gold" style="margin-top:16px; display:inline-block;" href="${link}" target="_blank" rel="noopener">Pay ${price} & unlock</a>`
+      : `<div class="paywall">
+           Pay <strong>${price}</strong> via JazzCash to:
+           <div class="out" style="margin-top:8px; font-size:1.05rem;">${JAZZCASH_NUMBER}</div>
+           After sending, note your JazzCash transaction ID and enter it below. Access is unlocked manually once the payment is confirmed on our end.
+           <label style="margin-top:12px;">Your name</label>
+           <input id="buyerName" placeholder="Full name">
+           <label>WhatsApp / contact number</label>
+           <input id="buyerContact" placeholder="03XX-XXXXXXX">
+           <label>JazzCash transaction ID</label>
+           <input id="buyerTxn" placeholder="e.g. 123456789012">
+           <div class="run-row">
+             <button class="btn btn-gold" onclick="submitJazzCashClaim('${id}','${name}','${price}')">I've paid — submit for review</button>
+           </div>
+         </div>`}
+  `);
+}
+/* Records a buyer's JazzCash payment claim in the browser's local storage.
+   NOTE: this has no backend, so claims only exist on the buyer's own device —
+   you (the site owner) won't see them automatically. For real orders, also
+   ask buyers to WhatsApp their transaction ID to you at the JazzCash number,
+   so you can verify and unlock manually until an automated payment link is added. */
+function submitJazzCashClaim(id, name, price){
+  const nameVal = document.getElementById("buyerName").value.trim();
+  const contact = document.getElementById("buyerContact").value.trim();
+  const txn = document.getElementById("buyerTxn").value.trim();
+  if(!nameVal || !contact || !txn){
+    alert("Please fill in your name, contact number, and JazzCash transaction ID.");
+    return;
+  }
+  const claims = JSON.parse(localStorage.getItem("aadarsh_claims") || "[]");
+  claims.push({id, name, price, buyer:nameVal, contact, txn, date:new Date().toISOString()});
+  localStorage.setItem("aadarsh_claims", JSON.stringify(claims));
+
+  openModal(`<h3>Payment submitted</h3>
+    <p style="color:var(--slate); font-size:0.92rem;">
+      Thanks, ${nameVal}. Your JazzCash transaction (${txn}) for <strong>${name}</strong> has been recorded.
+      Please send your transaction ID via WhatsApp to <strong>${JAZZCASH_NUMBER}</strong> — access will be unlocked once confirmed.
+    </p>`);
+}
+
+/* ---------------- PAID TOOL OPEN (paywalled) ---------------- */
+function openPaidTool(t){
+  if(unlocked.has(t.id)){
+    openModal(`<h3>${t.name}</h3><p style="color:var(--slate); font-size:0.92rem; margin-bottom:14px;">${t.desc}</p>
+      <div class="out">This tool is unlocked. Build its real functionality here — the same way the free tools below are implemented.</div>`);
+  } else {
+    openModal(`<h3>${t.name}</h3><p style="color:var(--slate); font-size:0.92rem;">${t.desc}</p>
+      <div class="paywall">
+        This is a pro tool — Rs. 500 one-time.
+        <div class="run-row">
+          <button class="btn btn-gold" onclick="openPurchase('${t.id}','${t.name}','Rs. 500')">Buy for Rs. 500</button>
+        </div>
+      </div>`);
+  }
+}
+
+/* ---------------- FREE TOOLS: FULL WORKING IMPLEMENTATIONS ---------------- */
+function openFreeTool(id){
+  const map = {
+    wc: ()=>openModal(`<h3>Word & character counter</h3>
+      <textarea id="in" placeholder="Paste or type text..."></textarea>
+      <div class="out" id="out">Words: 0 · Characters: 0 · Sentences: 0</div>`,
+      ()=>{
+        document.getElementById("in").oninput = e=>{
+          const v = e.target.value;
+          const words = v.trim() ? v.trim().split(/\s+/).length : 0;
+          const sentences = (v.match(/[.!?]+/g)||[]).length;
+          document.getElementById("out").textContent = `Words: ${words} · Characters: ${v.length} · Sentences: ${sentences}`;
+        };
+      }),
+    case: ()=>{
+      openModal(`<h3>Case converter</h3>
+        <textarea id="in" placeholder="Type text..."></textarea>
+        <div class="run-row">
+          <button class="btn btn-gold" data-c="upper">UPPER</button>
+          <button class="btn btn-gold" data-c="lower">lower</button>
+          <button class="btn btn-gold" data-c="title">Title Case</button>
+          <button class="btn btn-gold" data-c="sentence">Sentence case</button>
+        </div>
+        <div class="out" id="out"></div>`);
+      document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{
+        const v = document.getElementById("in").value;
+        let r = v;
+        if(b.dataset.c==="upper") r = v.toUpperCase();
+        if(b.dataset.c==="lower") r = v.toLowerCase();
+        if(b.dataset.c==="title") r = v.replace(/\w\S*/g, w=>w[0].toUpperCase()+w.slice(1).toLowerCase());
+        if(b.dataset.c==="sentence") r = v.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c=>c.toUpperCase());
+        document.getElementById("out").textContent = r;
+      });
+    },
+    slug: ()=>{
+      openModal(`<h3>Slug generator</h3>
+        <input id="in" placeholder="My Blog Post Title!">
+        <div class="out" id="out"></div>`);
+      document.getElementById("in").oninput = e=>{
+        document.getElementById("out").textContent = e.target.value.toLowerCase().trim()
+          .replace(/[^a-z0-9\s-]/g,"").replace(/\s+/g,"-").replace(/-+/g,"-");
+      };
+    },
+    b64: ()=>{
+      openModal(`<h3>Base64 encode / decode</h3>
+        <textarea id="in" placeholder="Text to encode/decode..."></textarea>
+        <div class="run-row">
+          <button class="btn btn-gold" id="enc">Encode</button>
+          <button class="btn btn-gold" id="dec">Decode</button>
+        </div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("enc").onclick=()=>{
+        try{ document.getElementById("out").textContent = btoa(document.getElementById("in").value); }
+        catch(e){ document.getElementById("out").textContent = "Error: could not encode."; }
+      };
+      document.getElementById("dec").onclick=()=>{
+        try{ document.getElementById("out").textContent = atob(document.getElementById("in").value); }
+        catch(e){ document.getElementById("out").textContent = "Error: invalid Base64."; }
+      };
+    },
+    pwd: ()=>{
+      openModal(`<h3>Password generator</h3>
+        <label>Length</label><input id="len" type="number" value="16" min="4" max="64">
+        <div class="run-row"><button class="btn btn-gold" id="gen">Generate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("gen").onclick=()=>{
+        const len = parseInt(document.getElementById("len").value)||16;
+        const chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%^&*";
+        let pw=""; for(let i=0;i<len;i++) pw+=chars[Math.floor(Math.random()*chars.length)];
+        document.getElementById("out").textContent = pw;
+      };
+    },
+    json: ()=>{
+      openModal(`<h3>JSON formatter</h3>
+        <textarea id="in" placeholder='{"key":"value"}'></textarea>
+        <div class="run-row">
+          <button class="btn btn-gold" id="pretty">Pretty print</button>
+          <button class="btn btn-gold" id="min">Minify</button>
+        </div>
+        <div class="out" id="out"></div>`);
+      const run = (fn)=>{
+        try{
+          const obj = JSON.parse(document.getElementById("in").value);
+          document.getElementById("out").textContent = fn(obj);
+        }catch(e){ document.getElementById("out").textContent = "Invalid JSON: "+e.message; }
+      };
+      document.getElementById("pretty").onclick=()=>run(o=>JSON.stringify(o,null,2));
+      document.getElementById("min").onclick=()=>run(o=>JSON.stringify(o));
+    },
+    color: ()=>{
+      openModal(`<h3>HEX ↔ RGB converter</h3>
+        <label>HEX</label><input id="hex" placeholder="#C9A227">
+        <label>RGB</label><input id="rgb" placeholder="201, 162, 39">
+        <div id="swatch" style="margin-top:14px; height:46px; border-radius:4px; border:1px solid var(--line);"></div>`);
+      const swatch = document.getElementById("swatch");
+      document.getElementById("hex").oninput = e=>{
+        const h = e.target.value.replace("#","");
+        if(/^[0-9a-fA-F]{6}$/.test(h)){
+          const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16);
+          document.getElementById("rgb").value = `${r}, ${g}, ${b}`;
+          swatch.style.background = `#${h}`;
+        }
+      };
+      document.getElementById("rgb").oninput = e=>{
+        const parts = e.target.value.split(",").map(x=>parseInt(x.trim()));
+        if(parts.length===3 && parts.every(n=>!isNaN(n))){
+          const hex = "#"+parts.map(n=>n.toString(16).padStart(2,"0")).join("");
+          document.getElementById("hex").value = hex;
+          swatch.style.background = hex;
+        }
+      };
+    },
+    bmi: ()=>{
+      openModal(`<h3>BMI calculator</h3>
+        <label>Height (cm)</label><input id="h" type="number" placeholder="170">
+        <label>Weight (kg)</label><input id="w" type="number" placeholder="65">
+        <div class="run-row"><button class="btn btn-gold" id="calc">Calculate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("calc").onclick=()=>{
+        const h = parseFloat(document.getElementById("h").value)/100;
+        const w = parseFloat(document.getElementById("w").value);
+        if(!h||!w){ document.getElementById("out").textContent="Enter both values."; return; }
+        const bmi = w/(h*h);
+        let cat = bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
+        document.getElementById("out").textContent = `BMI: ${bmi.toFixed(1)} — ${cat}`;
+      };
+    },
+    age: ()=>{
+      openModal(`<h3>Age calculator</h3>
+        <label>Date of birth</label><input id="dob" type="date">
+        <div class="run-row"><button class="btn btn-gold" id="calc">Calculate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("calc").onclick=()=>{
+        const dob = new Date(document.getElementById("dob").value);
+        if(isNaN(dob)){ document.getElementById("out").textContent="Pick a date."; return; }
+        const now = new Date();
+        let y = now.getFullYear()-dob.getFullYear();
+        let m = now.getMonth()-dob.getMonth();
+        let d = now.getDate()-dob.getDate();
+        if(d<0){ m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+        if(m<0){ y--; m+=12; }
+        document.getElementById("out").textContent = `${y} years, ${m} months, ${d} days`;
+      };
+    },
+    percent: ()=>{
+      openModal(`<h3>Percentage calculator</h3>
+        <label>X% of Y</label>
+        <div style="display:flex; gap:8px;"><input id="x" type="number" placeholder="20"><input id="y" type="number" placeholder="150"></div>
+        <div class="run-row"><button class="btn btn-gold" id="calc">Calculate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("calc").onclick=()=>{
+        const x=parseFloat(document.getElementById("x").value), y=parseFloat(document.getElementById("y").value);
+        document.getElementById("out").textContent = (isNaN(x)||isNaN(y)) ? "Enter both numbers." : `${x}% of ${y} = ${(x/100*y).toFixed(2)}`;
+      };
+    },
+    lorem: ()=>{
+      const words = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua".split(" ");
+      openModal(`<h3>Lorem ipsum generator</h3>
+        <label>Paragraphs</label><input id="n" type="number" value="2" min="1" max="10">
+        <div class="run-row"><button class="btn btn-gold" id="gen">Generate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("gen").onclick=()=>{
+        const n = parseInt(document.getElementById("n").value)||2;
+        let out=[];
+        for(let p=0;p<n;p++){
+          let sentence=[];
+          for(let i=0;i<30;i++) sentence.push(words[Math.floor(Math.random()*words.length)]);
+          out.push(sentence.join(" ")+".");
+        }
+        document.getElementById("out").textContent = out.join("\n\n");
+      };
+    },
+    urlenc: ()=>{
+      openModal(`<h3>URL encoder / decoder</h3>
+        <textarea id="in" placeholder="https://example.com/search?q=hello world"></textarea>
+        <div class="run-row">
+          <button class="btn btn-gold" id="enc">Encode</button>
+          <button class="btn btn-gold" id="dec">Decode</button>
+        </div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("enc").onclick=()=>document.getElementById("out").textContent = encodeURIComponent(document.getElementById("in").value);
+      document.getElementById("dec").onclick=()=>{
+        try{ document.getElementById("out").textContent = decodeURIComponent(document.getElementById("in").value); }
+        catch(e){ document.getElementById("out").textContent = "Invalid encoded string."; }
+      };
+    },
+    timestamp: ()=>{
+      openModal(`<h3>Unix timestamp converter</h3>
+        <label>Unix timestamp (seconds)</label><input id="ts" placeholder="1758345600">
+        <div class="run-row"><button class="btn btn-gold" id="toDate">To date</button><button class="btn btn-gold" id="now">Use now</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("toDate").onclick=()=>{
+        const ts = parseInt(document.getElementById("ts").value);
+        document.getElementById("out").textContent = isNaN(ts) ? "Enter a timestamp." : new Date(ts*1000).toString();
+      };
+      document.getElementById("now").onclick=()=>{
+        const t = Math.floor(Date.now()/1000);
+        document.getElementById("ts").value = t;
+        document.getElementById("out").textContent = `${t} → ${new Date(t*1000).toString()}`;
+      };
+    },
+    temp: ()=>{
+      openModal(`<h3>Temperature converter</h3>
+        <label>Celsius</label><input id="c" type="number" placeholder="25">
+        <div class="out" id="out"></div>`);
+      document.getElementById("c").oninput = e=>{
+        const c = parseFloat(e.target.value);
+        if(isNaN(c)){ document.getElementById("out").textContent=""; return; }
+        document.getElementById("out").textContent = `${(c*9/5+32).toFixed(1)}°F · ${(c+273.15).toFixed(1)} K`;
+      };
+    },
+    randnum: ()=>{
+      openModal(`<h3>Random number generator</h3>
+        <div style="display:flex; gap:8px;"><input id="min" type="number" placeholder="Min" value="1"><input id="max" type="number" placeholder="Max" value="100"></div>
+        <div class="run-row"><button class="btn btn-gold" id="gen">Generate</button></div>
+        <div class="out" id="out"></div>`);
+      document.getElementById("gen").onclick=()=>{
+        const min=parseInt(document.getElementById("min").value), max=parseInt(document.getElementById("max").value);
+        document.getElementById("out").textContent = (isNaN(min)||isNaN(max)) ? "Enter both bounds." : Math.floor(Math.random()*(max-min+1)+min);
+      };
+    }
+  };
+  if(map[id]) map[id]();
+}
+
+</script>
+</body>
+</html>
